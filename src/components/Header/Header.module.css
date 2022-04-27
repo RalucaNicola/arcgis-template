@@ -1,0 +1,15 @@
+.contentRow {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.appTitle {
+  color: var(--calcite-ui-brand);
+}
+
+header[slot='header'] {
+  z-index: 99;
+  padding: 0 1rem;
+}

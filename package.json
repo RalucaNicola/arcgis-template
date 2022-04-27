@@ -1,0 +1,37 @@
+{
+  "name": "arcgis-template",
+  "version": "1.0.0",
+  "description": "A boilerplate for web apps with ArcGIS API for JavaScript, Calcite components and React. Built with Vite.",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/RalucaNicola/arcgis-template.git"
+  },
+  "keywords": [
+    "arcgis-js",
+    "calcite",
+    "react",
+    "vite"
+  ],
+  "author": "Raluca Nicola",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/RalucaNicola/arcgis-template/issues"
+  },
+  "homepage": "https://github.com/RalucaNicola/arcgis-template#readme",
+  "devDependencies": {
+    "@vitejs/plugin-react": "^1.1.4",
+    "vite": "^2.7.13"
+  },
+  "dependencies": {
+    "@arcgis/core": "^4.22.2",
+    "@esri/calcite-components-react": "^0.16.0",
+    "mobx": "^6.4.1",
+    "mobx-react": "^7.3.0",
+    "react": "^16.7.0",
+    "react-dom": "^16.7.0"
+  }
+}

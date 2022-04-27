@@ -1,0 +1,11 @@
+export const config = {
+  title: 'Current Wildfires',
+  description: '',
+  portalUrl: 'https://www.arcgis.com',
+  oauthappid: null,
+  apiKey: null,
+  group: '',
+  webmap: '11095b26dc604a21b61226bf1ab52d82',
+  webscene: '',
+  shareable: []
+};
