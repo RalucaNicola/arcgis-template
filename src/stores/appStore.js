@@ -34,7 +34,11 @@ class AppStore {
   }
 
   setError(error) {
-    this.error = { name: error.name, message: error.message };
+    if (error) {
+      this.error = { name: error.name, message: error.message };
+    } else {
+      this.error = null;
+    }
   }
 }
 

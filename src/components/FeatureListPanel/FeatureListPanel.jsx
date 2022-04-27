@@ -4,7 +4,7 @@ import '@esri/calcite-components/dist/components/calcite-panel';
 import '@esri/calcite-components/dist/components/calcite-pick-list';
 import '@esri/calcite-components/dist/components/calcite-pick-list-item';
 import { CalciteAction, CalcitePanel, CalcitePickList, CalcitePickListItem } from '@esri/calcite-components-react';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { appStore } from '../../stores/appStore';
 import { config } from '../../config';
 
@@ -58,7 +58,8 @@ export const FeatureListPanel = ({ hidden, setActivePanel }) => {
           });
         });
       } else {
-        console.log('Cannot find layer');
+        setLoading(false);
+        appStore.setError(new Error(`Can't find layer with title ${config.layerInfo.title}`));
       }
     }
   }, [appStore.view]);
