@@ -2,13 +2,16 @@ import { makeObservable, observable, computed, action } from 'mobx';
 
 class AppStore {
   view = null;
+  error = null;
 
   constructor() {
     makeObservable(this, {
       view: observable.ref,
       title: computed,
       loading: computed,
-      setView: action
+      setView: action,
+      error: observable,
+      setError: action
     });
   }
 
@@ -28,6 +31,10 @@ class AppStore {
 
   setView(view) {
     this.view = view;
+  }
+
+  setError(error) {
+    this.error = { name: error.name, message: error.message };
   }
 }
 

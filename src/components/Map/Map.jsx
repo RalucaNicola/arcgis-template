@@ -3,17 +3,14 @@ import { useEffect, useRef } from 'react';
 import { loadMap } from '../../services/map-service';
 import { appStore } from '../../stores/appStore';
 
-const initializeView = async (viewProperties) => {
-  const map = await loadMap();
-  viewProperties.map = map;
+const initializeView = (viewProperties) => {
   return new Promise(async (resolve, reject) => {
-    if (map.declaredClass === 'esri.WebMap') {
+    if (viewProperties.map.declaredClass === 'esri.WebMap') {
       const { default: MapView } = await import('@arcgis/core/views/MapView');
       const mapView = new MapView(viewProperties);
       mapView.when(resolve, reject);
     }
-
-    if (map.declaredClass === 'esri.WebScene') {
+    if (viewProperties.map.declaredClass === 'esri.WebScene') {
       const { default: SceneView } = await import('@arcgis/core/views/SceneView');
       const sceneView = new SceneView(viewProperties);
       sceneView.when(resolve, reject);
@@ -38,16 +35,22 @@ export function Map() {
           }
         }
       };
-      initializeView(viewProperties)
-        .then((result) => {
-          view = result;
-          view.when(() => {
+      (async () => {
+        try {
+          const map = await loadMap();
+          viewProperties.map = map;
+          try {
+            view = await initializeView(viewProperties);
             appStore.setView(view);
-          });
-        })
-        .catch(() => {
+          } catch (error) {
+            appStore.setView(undefined);
+            appStore.setError(error);
+          }
+        } catch (error) {
           appStore.setView(undefined);
-        });
+          appStore.setError(error);
+        }
+      })();
 
       return () => {
         if (view) {

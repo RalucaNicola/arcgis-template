@@ -9,6 +9,7 @@ import { CalciteLoader } from '@esri/calcite-components-react';
 import { setAssetPath } from '@esri/calcite-components/dist/components';
 import { appStore } from '../stores/appStore';
 import { observer } from 'mobx-react';
+import { Error } from '../components/Error';
 setAssetPath('https://js.arcgis.com/calcite-components/1.0.0-beta.80/assets');
 
 export const App = observer(() => {
@@ -20,6 +21,7 @@ export const App = observer(() => {
         <div className={styles.contentFill}>
           <Map></Map>
         </div>
+        <Error></Error>
       </CalciteShell>
       <CalciteLoader active={appStore.loading ? 'true' : null} type='indeterminate' scale='l'></CalciteLoader>
     </>
