@@ -1,0 +1,70 @@
+import { SimpleRenderer } from '@arcgis/core/renderers';
+import UniqueValueRenderer from '@arcgis/core/renderers/UniqueValueRenderer';
+
+export const getTimeDefinition = async (url: string) => {
+  const definitionUrl = url + '/multiDimensionalInfo?f=json';
+  const response = await fetch(definitionUrl);
+  const result = await response.json();
+  const data = result.multidimensionalInfo;
+  return [
+    {
+      variableName: data.variables[0].name,
+      dimensionName: data.variables[0].dimensions[0].name,
+      values: data.variables[0].dimensions[0].values
+    }
+  ];
+};
+
+const defaultSymbol = {
+  type: 'simple-fill',
+  color: [0, 217, 109, 0],
+  style: 'solid',
+  outline: {
+    width: 0.5,
+    color: [255, 255, 255, 1]
+  }
+};
+
+const highlightedSymbol = {
+  type: 'simple-fill',
+  color: [255, 255, 255],
+  style: 'diagonal-cross',
+  outline: {
+    width: 1,
+    color: [255, 255, 255]
+  }
+};
+
+export const getSelectionRenderer = (field: string, value: string) => {
+  return new UniqueValueRenderer({
+    field,
+    defaultSymbol,
+    uniqueValueInfos: [
+      {
+        value,
+        symbol: highlightedSymbol
+      }
+    ]
+  });
+};
+
+export const getSimpleRenderer = () => {
+  return new SimpleRenderer({
+    symbol: defaultSymbol
+  });
+};
+
+export const months = [
+  'January',
+  'February',
+  'March',
+  'April',
+  'May',
+  'June',
+  'July',
+  'August',
+  'September',
+  'October',
+  'November',
+  'December'
+];

@@ -1,0 +1,55 @@
+.container {
+  margin-top: 20px;
+  display: flex;
+}
+
+.countrySelection {
+  flex: 1;
+  border-right: 1px solid #ddd;
+  padding: 0 20px 0 0;
+  overflow: auto;
+  max-width: 250px;
+}
+
+.countryChart {
+  flex: 2;
+  padding: 0 0 0 20px;
+  display: flex;
+  flex-direction: column;
+  height: 25vh;
+}
+
+.headerChart {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.label {
+  cursor: pointer;
+}
+
+.legendInfo {
+  font-size: var(--calcite-font-size--1);
+  padding-bottom: 5px;
+}
+
+@media (max-width: 700px) {
+  .container {
+    flex-direction: column;
+  }
+
+  .countrySelection {
+    border-right: none;
+    max-width: revert;
+    padding: 0 0 20px 0;
+  }
+
+  .countryChart {
+    padding: 0;
+  }
+
+  .legendInfo {
+    display: none;
+  }
+}
