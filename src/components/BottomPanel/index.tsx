@@ -13,7 +13,6 @@ import { getEutrophicationData } from '../../store/globals/eutrophicationData';
 const BottomPanel = () => {
   const [visible, setVisible] = useState(true);
   const selectedCountry = useSelector((state: RootState) => state.country);
-  console.log('BottomPanel rendered');
   const eutrophicationDataLoaded = useAppSelector((state) => state.appLoading.eutrophicationDataLoaded);
   const loadingError = useAppSelector((state) => state.appLoading.error);
   const eutrophicationData = eutrophicationDataLoaded ? getEutrophicationData() : null;

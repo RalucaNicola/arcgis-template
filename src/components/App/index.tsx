@@ -6,8 +6,6 @@ import { ErrorAlert } from '../ErrorAlert';
 import Map from '../Map';
 
 const App = () => {
-  console.log('App rendered');
-
   return (
     <>
       <Map>

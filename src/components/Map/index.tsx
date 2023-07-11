@@ -24,7 +24,6 @@ const Map: FC<MapProps> = ({ children }: MapProps) => {
   const [view, setView] = useState<MapView | null>(null);
   const mapDivRef = useRef<HTMLDivElement>(null);
   const dispatch = useAppDispatch();
-  console.log('Map rendered');
 
   const initializeMapView = async () => {
     try {
@@ -69,7 +68,6 @@ const Map: FC<MapProps> = ({ children }: MapProps) => {
         //window.view = mapView;
       });
     } catch (error) {
-      console.log('An error happened', error);
       const { message, details } = error;
       dispatch(setLoadingError({ error: { name: message, message: details.url } }));
     }
