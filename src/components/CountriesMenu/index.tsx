@@ -7,22 +7,18 @@ import '@esri/calcite-components/dist/components/calcite-radio-button';
 import { CalciteSelect, CalciteOption } from '@esri/calcite-components-react';
 
 import { RootState } from '../../store/storeConfiguration';
-import { useDispatch, useSelector } from 'react-redux';
-import { setCountry } from '../../store/slices/country-slice';
-import { countryDataUrl } from '../../config';
-import { useFetchData } from '../../hooks/useFetchCSV';
+import { useSelector } from 'react-redux';
+import { useAppDispatch } from '../../hooks/useAppDispatch';
+import { zoomToCountry } from '../../store/services/country-selection/country-thunk';
+import { DSVRowArray } from 'd3';
 
-const CountriesMenu = () => {
+const CountriesMenu = ({ data }: { data: DSVRowArray<string> }) => {
   const selectedCountry = useSelector((state: RootState) => state.country);
-  const dispatch = useDispatch();
-  const { data, error, isLoading } = useFetchData(countryDataUrl);
-  console.log('CountriesMenu rendered');
+  const dispatch = useAppDispatch();
 
   return (
     <div className={styles.container}>
-      {error && <div>There was an error loading the data.</div>}
-      {isLoading && <div>Loading...</div>}
-      {data && !isLoading && !error && (
+      {data && (
         <div className={styles.countrySelection}>
           <CalciteSelect
             scale={'m'}
@@ -31,9 +27,9 @@ const CountriesMenu = () => {
             onCalciteSelectChange={(event) => {
               const country = event.target.selectedOption.value;
               if (country === 'None') {
-                dispatch(setCountry({ name: null, selectedFromMap: false }));
+                dispatch(zoomToCountry({ name: null, selectedFromMap: false }));
               } else {
-                dispatch(setCountry({ name: country, selectedFromMap: false }));
+                dispatch(zoomToCountry({ name: country, selectedFromMap: false }));
               }
             }}
           >

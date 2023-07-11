@@ -1,19 +1,20 @@
-//import map component
+import { useAppSelector } from '../../hooks/useAppSelector';
+import { getEutrophicationData } from '../../store/globals/eutrophicationData';
 import BottomPanel from '../BottomPanel';
 import CountriesLayer from '../CountriesLayer';
-import CountriesMenu from '../CountriesMenu';
+import { ErrorAlert } from '../ErrorAlert';
 import Map from '../Map';
 
 const App = () => {
   console.log('App rendered');
+
   return (
     <>
       <Map>
         <CountriesLayer></CountriesLayer>
       </Map>
-      <BottomPanel>
-        <CountriesMenu></CountriesMenu>
-      </BottomPanel>
+      <BottomPanel></BottomPanel>
+      <ErrorAlert></ErrorAlert>
     </>
   );
 };

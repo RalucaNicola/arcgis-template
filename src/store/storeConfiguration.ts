@@ -1,17 +1,20 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
-import countryReducer from './slices/country-slice';
+import countryReducer from './services/country-selection/country-slice';
+import loadingReducer from './services/app-loading/loading-slice';
 
 export const getPreloadedState = () => {
   return {};
 };
 
-const rootReducer = combineReducers({ country: countryReducer });
+const rootReducer = combineReducers({
+  appLoading: loadingReducer,
+  country: countryReducer
+});
+
+export const store = configureStore({
+  reducer: rootReducer,
+  preloadedState: getPreloadedState()
+});
 
 export type RootState = ReturnType<typeof rootReducer>;
-
-export const configureAppStore = (preloadedState: {}) => {
-  return configureStore({
-    reducer: rootReducer,
-    preloadedState
-  });
-};
+export type AppDispatch = typeof store.dispatch;

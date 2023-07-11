@@ -8,14 +8,17 @@ import './main.css';
 
 import ErrorPage from './pages/ErrorPage';
 import App from './components/App';
-import { configureAppStore } from './store/storeConfiguration';
+import { store } from './store/storeConfiguration';
+import { fetchEutrophicationData } from './store/services/app-loading/data-load-thunk';
 
 const root = createRoot(document.getElementById('root') as HTMLElement);
+
+store.dispatch(fetchEutrophicationData());
 
 try {
   root.render(
     <StrictMode>
-      <ReduxProvider store={configureAppStore({})}>
+      <ReduxProvider store={store}>
         <App></App>
       </ReduxProvider>
     </StrictMode>

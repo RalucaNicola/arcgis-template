@@ -5,47 +5,19 @@ import FeatureLayer from '@arcgis/core/layers/FeatureLayer';
 import { getSimpleRenderer, getSelectionRenderer } from '../../utils/utils';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../store/storeConfiguration';
-
+import { useAppDispatch } from '../../hooks/useAppDispatch';
+import Graphic from '@arcgis/core/Graphic';
+import { zoomToCountry } from '../../store/services/country-selection/country-thunk';
+interface GraphicHit {
+  graphic: Graphic;
+}
 interface Props {
   view?: MapView;
 }
 
 const CountriesLayer: FC<Props> = ({ view }: Props) => {
   const [eezLayer, setEezLayer] = useState<FeatureLayer | null>(null);
-  const selectedCountry = useSelector((state: RootState) => state.country);
-  console.log('CountriesLayer rendered');
-  // when country selection changes, update the layer renderer
-  useEffect(() => {
-    if (selectedCountry && eezLayer) {
-      if (selectedCountry.name) {
-        eezLayer.renderer = getSelectionRenderer('CountryName', selectedCountry.name);
-        if (!selectedCountry.selectedFromMap) {
-          eezLayer
-            .queryFeatures({
-              where: `CountryName = '${selectedCountry.name}'`,
-              returnGeometry: true,
-              outFields: ['CountryName']
-            })
-            .then((result) => {
-              if (result.features.length > 0) {
-                const feature = result.features[0];
-                const extent = feature.geometry.extent;
-                const expand = extent.width < 15000000 && extent.height < 15000000;
-                view?.goTo(
-                  {
-                    target: expand ? extent.expand(1.7) : extent
-                  },
-                  { animate: false }
-                );
-              }
-            });
-        }
-      } else {
-        eezLayer.renderer = getSimpleRenderer();
-      }
-    }
-  }, [selectedCountry, eezLayer]);
-
+  const dispatch = useAppDispatch();
   useEffect(() => {
     if (view) {
       const eezLayer = view.map.layers
@@ -56,6 +28,28 @@ const CountriesLayer: FC<Props> = ({ view }: Props) => {
       setEezLayer(eezLayer);
     }
   }, [view]);
+
+  // add event listener for country selection
+  useEffect(() => {
+    if (view && eezLayer) {
+      const listener = view.on('click', async (event) => {
+        const result = await view.hitTest(event, { include: [eezLayer] });
+        if (result.results && result.results.length > 0) {
+          const graphic = (result.results[0] as GraphicHit).graphic;
+          const newCountrySelection = graphic.attributes['CountryName'];
+          if (newCountrySelection) {
+            dispatch(zoomToCountry({ name: newCountrySelection, selectedFromMap: true }));
+          }
+        } else {
+          dispatch(zoomToCountry({ name: null, selectedFromMap: false }));
+        }
+      });
+
+      return () => {
+        listener.remove();
+      };
+    }
+  }, [view, eezLayer]);
 
   return null;
 };

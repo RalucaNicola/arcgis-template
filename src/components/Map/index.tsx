@@ -6,8 +6,11 @@ import { mapConfig, regionNames } from '../../config';
 import WebMap from '@arcgis/core/WebMap';
 import FeatureLayer from '@arcgis/core/layers/FeatureLayer';
 import { getSimpleRenderer } from '../../utils/utils';
-import { useDispatch } from 'react-redux';
-import { setCountry } from '../../store/slices/country-slice';
+import { setGlobalView } from '../../store/globals/view';
+import { zoomToCountry } from '../../store/services/country-selection/country-thunk';
+import { useAppDispatch } from '../../hooks/useAppDispatch';
+import { setLoadingError, setViewLoaded } from '../../store/services/app-loading/loading-slice';
+import PortalItem from '@arcgis/core/portal/PortalItem';
 
 interface MapProps {
   children?: ReactNode;
@@ -19,44 +22,24 @@ interface GraphicHit {
 
 const Map: FC<MapProps> = ({ children }: MapProps) => {
   const [view, setView] = useState<MapView | null>(null);
-  const [eezLayer, setEezLayer] = useState<FeatureLayer | null>(null);
   const mapDivRef = useRef<HTMLDivElement>(null);
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   console.log('Map rendered');
 
-  // add event listener for country selection
-  useEffect(() => {
-    if (view && eezLayer) {
-      const listener = view.on('click', async (event) => {
-        const result = await view.hitTest(event, { include: [eezLayer] });
-        if (result.results && result.results.length > 0) {
-          const graphic = (result.results[0] as GraphicHit).graphic;
-          const newCountrySelection = graphic.attributes['CountryName'];
-          if (newCountrySelection) {
-            dispatch(setCountry({ name: newCountrySelection, selectedFromMap: true }));
-          }
-        } else {
-          dispatch(setCountry({ name: null, selectedFromMap: false }));
-        }
+  const initializeMapView = async () => {
+    try {
+      const portalItem = new PortalItem({
+        id: mapConfig['web-map-id']
       });
 
-      return () => {
-        listener.remove();
-      };
-    }
-  }, [view, eezLayer]);
-
-  // initialize view
-  useEffect(() => {
-    let mapView: MapView | null = null;
-    try {
-      mapView = new MapView({
+      await portalItem.load();
+      const webmap = new WebMap({
+        portalItem: portalItem
+      });
+      await webmap.load();
+      const mapView = new MapView({
         container: mapDivRef.current,
-        map: new WebMap({
-          portalItem: {
-            id: mapConfig['web-map-id']
-          }
-        }),
+        map: webmap,
         padding: {
           top: 50,
           bottom: 0
@@ -79,19 +62,22 @@ const Map: FC<MapProps> = ({ children }: MapProps) => {
         }
       });
 
-      mapView.when(() => {
+      await mapView.when(() => {
         setView(mapView);
-        const eezLayer = mapView.map.layers
-          .filter((layer) => layer.title === 'Exclusive Economic Zone boundaries')
-          .getItemAt(0) as FeatureLayer;
-        eezLayer.outFields = regionNames.map((region) => region.field);
-        eezLayer.renderer = getSimpleRenderer();
-        setEezLayer(eezLayer);
+        setGlobalView(mapView);
+        dispatch(setViewLoaded(true));
         //window.view = mapView;
       });
-    } catch (err) {
-      console.error(err);
+    } catch (error) {
+      console.log('An error happened', error);
+      const { message, details } = error;
+      dispatch(setLoadingError({ error: { name: message, message: details.url } }));
     }
+  };
+
+  // initialize view
+  useEffect(() => {
+    initializeMapView();
   }, []);
 
   return (

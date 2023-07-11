@@ -3,6 +3,8 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 export interface CountryState {
   name: string | null;
   selectedFromMap: boolean;
+  loading?: boolean;
+  error?: string | null;
 }
 
 const initialState = {
@@ -14,12 +16,20 @@ const countrySlice = createSlice({
   name: 'country',
   initialState,
   reducers: {
-    setCountry(state, param: PayloadAction<{ name: string; selectedFromMap: boolean }>) {
+    setSelectedCountry(state, param: PayloadAction<CountryState>) {
       state.name = param.payload.name;
       state.selectedFromMap = param.payload.selectedFromMap;
+      state.loading = true;
+    },
+    setSelectedCountrySuccess(state) {
+      state.loading = false;
+    },
+    setSelectedCountryError(state, param: PayloadAction<string>) {
+      state.loading = false;
+      state.error = param.payload;
     }
   }
 });
 
-export const { setCountry } = countrySlice.actions;
+export const { setSelectedCountry, setSelectedCountryError, setSelectedCountrySuccess } = countrySlice.actions;
 export default countrySlice.reducer;
