@@ -1,23 +1,15 @@
 import * as styles from './Map.module.css';
 import { Children, FC, ReactElement, ReactNode, cloneElement, useEffect, useRef, useState } from 'react';
 import MapView from '@arcgis/core/views/MapView';
-import Graphic from '@arcgis/core/Graphic';
-import { mapConfig, regionNames } from '../../config';
+import { mapConfig } from '../../config';
 import WebMap from '@arcgis/core/WebMap';
-import FeatureLayer from '@arcgis/core/layers/FeatureLayer';
-import { getSimpleRenderer } from '../../utils/utils';
 import { setGlobalView } from '../../store/globals/view';
-import { zoomToCountry } from '../../store/services/country-selection/country-thunk';
 import { useAppDispatch } from '../../hooks/useAppDispatch';
 import { setLoadingError, setViewLoaded } from '../../store/services/app-loading/loading-slice';
 import PortalItem from '@arcgis/core/portal/PortalItem';
 
 interface MapProps {
   children?: ReactNode;
-}
-
-interface GraphicHit {
-  graphic: Graphic;
 }
 
 const Map: FC<MapProps> = ({ children }: MapProps) => {

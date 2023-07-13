@@ -1,5 +1,3 @@
-import { useAppSelector } from '../../hooks/useAppSelector';
-import { getEutrophicationData } from '../../store/globals/eutrophicationData';
 import BottomPanel from '../BottomPanel';
 import CountriesLayer from '../CountriesLayer';
 import { ErrorAlert } from '../ErrorAlert';
