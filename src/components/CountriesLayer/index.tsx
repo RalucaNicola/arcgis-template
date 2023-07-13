@@ -5,7 +5,10 @@ import FeatureLayer from '@arcgis/core/layers/FeatureLayer';
 import { getSimpleRenderer } from '../../utils/utils';
 import { useAppDispatch } from '../../hooks/useAppDispatch';
 import Graphic from '@arcgis/core/Graphic';
-import { zoomToCountry } from '../../store/services/country-selection/country-thunk';
+import { highlightCountryFromMap } from '../../store/services/country-selection/countryThunk';
+import { createHighlightLayer } from '../../store/services/country-selection/highlightLayer';
+import { Polygon } from '@arcgis/core/geometry';
+
 interface GraphicHit {
   graphic: Graphic;
 }
@@ -24,6 +27,8 @@ const CountriesLayer: FC<Props> = ({ view }: Props) => {
       eezLayer.outFields = regionNames.map((region) => region.field);
       eezLayer.renderer = getSimpleRenderer();
       setEezLayer(eezLayer);
+      // create layer used to highlight the selected country
+      createHighlightLayer();
     }
   }, [view]);
 
@@ -34,12 +39,13 @@ const CountriesLayer: FC<Props> = ({ view }: Props) => {
         const result = await view.hitTest(event, { include: [eezLayer] });
         if (result.results && result.results.length > 0) {
           const graphic = (result.results[0] as GraphicHit).graphic;
+          console.log(graphic);
           const newCountrySelection = graphic.attributes['CountryName'];
           if (newCountrySelection) {
-            dispatch(zoomToCountry({ name: newCountrySelection, selectedFromMap: true }));
+            dispatch(highlightCountryFromMap({ name: newCountrySelection, geometry: graphic.geometry as Polygon }));
           }
         } else {
-          dispatch(zoomToCountry({ name: null, selectedFromMap: false }));
+          dispatch(highlightCountryFromMap({ name: null }));
         }
       });
 

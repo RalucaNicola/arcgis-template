@@ -2,11 +2,11 @@ import * as styles from './Map.module.css';
 import { Children, FC, ReactElement, ReactNode, cloneElement, useEffect, useRef, useState } from 'react';
 import MapView from '@arcgis/core/views/MapView';
 import { mapConfig } from '../../config';
-import WebMap from '@arcgis/core/WebMap';
 import { setGlobalView } from '../../store/globals/view';
 import { useAppDispatch } from '../../hooks/useAppDispatch';
-import { setLoadingError, setViewLoaded } from '../../store/services/app-loading/loading-slice';
+import { setLoadingError, setViewLoaded } from '../../store/services/app-loading/loadingSlice';
 import PortalItem from '@arcgis/core/portal/PortalItem';
+import WebMap from '@arcgis/core/WebMap';
 
 interface MapProps {
   children?: ReactNode;
@@ -57,7 +57,7 @@ const Map: FC<MapProps> = ({ children }: MapProps) => {
         setView(mapView);
         setGlobalView(mapView);
         dispatch(setViewLoaded(true));
-        //window.view = mapView;
+        window.view = mapView;
       });
     } catch (error) {
       const { message, details } = error;

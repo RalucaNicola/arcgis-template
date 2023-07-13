@@ -1,11 +1,15 @@
 import FeatureLayer from '@arcgis/core/layers/FeatureLayer';
-import MapView from 'esri/views/MapView';
+import MapView from '@arcgis/core/views/MapView';
 
 let view: MapView = null;
 let countriesLayer: FeatureLayer = null;
 
 export function setGlobalView(mapView: MapView) {
   view = mapView;
+}
+
+export function getGlobalView() {
+  return view;
 }
 
 export function getCountriesLayer() {
@@ -19,8 +23,4 @@ export function getCountriesLayer() {
 
 export function getLayerById(id: string) {
   return view.map.findLayerById(id);
-}
-
-export function getGlobalView() {
-  return view;
 }

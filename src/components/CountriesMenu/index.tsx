@@ -9,7 +9,7 @@ import { CalciteSelect, CalciteOption } from '@esri/calcite-components-react';
 import { RootState } from '../../store/storeConfiguration';
 import { useSelector } from 'react-redux';
 import { useAppDispatch } from '../../hooks/useAppDispatch';
-import { zoomToCountry } from '../../store/services/country-selection/country-thunk';
+import { highlightCountryFromList } from '../../store/services/country-selection/countryThunk';
 import { DSVRowArray } from 'd3';
 
 const CountriesMenu = ({ data }: { data: DSVRowArray<string> }) => {
@@ -27,9 +27,9 @@ const CountriesMenu = ({ data }: { data: DSVRowArray<string> }) => {
             onCalciteSelectChange={(event) => {
               const country = event.target.selectedOption.value;
               if (country === 'None') {
-                dispatch(zoomToCountry({ name: null, selectedFromMap: false }));
+                dispatch(highlightCountryFromList({ name: null }));
               } else {
-                dispatch(zoomToCountry({ name: country, selectedFromMap: false }));
+                dispatch(highlightCountryFromList({ name: country }));
               }
             }}
           >

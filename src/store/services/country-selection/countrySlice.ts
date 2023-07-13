@@ -1,10 +1,11 @@
+import { Polygon } from '@arcgis/core/geometry';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 export interface CountryState {
   name: string | null;
-  selectedFromMap: boolean;
   loading?: boolean;
   error?: string | null;
+  geometry?: Polygon | null;
 }
 
 const initialState = {
@@ -18,7 +19,6 @@ const countrySlice = createSlice({
   reducers: {
     setSelectedCountry(state, param: PayloadAction<CountryState>) {
       state.name = param.payload.name;
-      state.selectedFromMap = param.payload.selectedFromMap;
       state.loading = true;
     },
     setSelectedCountrySuccess(state) {

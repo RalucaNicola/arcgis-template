@@ -1,19 +1,13 @@
 /**********************
  * URL hash param keys
  *
- * mapCenter: longitude, latitude
+ * center: longitude, latitude
  * zoom: number
- * mode: 'monthly'/'yearly'
- * timeSlice: number
  * country: string
- * regionIndex: number
  **********************/
 const keys = {
   center: 'mapCenter',
-  mode: 'mode',
-  time: 'timeSlice',
-  country: 'country',
-  region: 'regionIndex'
+  country: 'country'
 };
 
 const hashParams = new URLSearchParams(window.location.hash.slice(1));
@@ -63,38 +57,6 @@ export const getMapCenterFromHashParams = () => {
   };
 };
 
-export const setModeToHashParameters = (value) => {
-  if (value) {
-    updateHashParams(keys.mode, 'monthly');
-  } else {
-    updateHashParams(keys.mode, null);
-  }
-};
-
-export const getModeFromHashParameters = () => {
-  const value = getHashParamValueByKey(keys.mode);
-  if (!value) {
-    return false;
-  }
-  return value === 'monthly';
-};
-
-export const setTimeSliceToHashParameters = (value) => {
-  if (value) {
-    updateHashParams(keys.time, value);
-  } else {
-    updateHashParams(keys.time, null);
-  }
-};
-
-export const getTimeSliceFromHashParameters = () => {
-  const value = getHashParamValueByKey(keys.time);
-  if (!value) {
-    return null;
-  }
-  return +value;
-};
-
 export const setCountryToHashParameters = (value) => {
   updateHashParams(keys.country, value);
 };
@@ -108,20 +70,4 @@ export const getCountryFromHashParameters = () => {
     name: value,
     selectedFromMap: true
   };
-};
-
-export const setRegionToHashParameters = (value) => {
-  if (!value) {
-    updateHashParams(keys.region, null);
-  } else {
-    updateHashParams(keys.region, value);
-  }
-};
-
-export const getRegionFromHashParameters = () => {
-  const value = getHashParamValueByKey(keys.region);
-  if (!value) {
-    return 0;
-  }
-  return parseInt(value);
 };

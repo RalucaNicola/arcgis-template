@@ -9,7 +9,7 @@ import './main.css';
 import ErrorPage from './pages/ErrorPage';
 import App from './components/App';
 import { store } from './store/storeConfiguration';
-import { fetchEutrophicationData } from './store/services/app-loading/data-load-thunk';
+import { fetchEutrophicationData } from './store/services/app-loading/dataLoadingThunk';
 
 const root = createRoot(document.getElementById('root') as HTMLElement);
 

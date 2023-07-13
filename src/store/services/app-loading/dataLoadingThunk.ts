@@ -1,6 +1,6 @@
 import { csv } from 'd3';
 import { AppDispatch } from '../../storeConfiguration';
-import { setEutrophicationDataLoaded, setLoadingError } from './loading-slice';
+import { setEutrophicationDataLoaded, setLoadingError } from './loadingSlice';
 import {
   setEutrophicationCountryData,
   setEutrophicationDataMonthly,

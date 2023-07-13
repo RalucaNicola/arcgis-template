@@ -1,20 +1,6 @@
 import { SimpleRenderer } from '@arcgis/core/renderers';
 import UniqueValueRenderer from '@arcgis/core/renderers/UniqueValueRenderer';
 
-export const getTimeDefinition = async (url: string) => {
-  const definitionUrl = url + '/multiDimensionalInfo?f=json';
-  const response = await fetch(definitionUrl);
-  const result = await response.json();
-  const data = result.multidimensionalInfo;
-  return [
-    {
-      variableName: data.variables[0].name,
-      dimensionName: data.variables[0].dimensions[0].name,
-      values: data.variables[0].dimensions[0].values
-    }
-  ];
-};
-
 const defaultSymbol = {
   type: 'simple-fill',
   color: [0, 217, 109, 0],

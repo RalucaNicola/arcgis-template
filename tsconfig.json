@@ -15,8 +15,8 @@
     "lib": ["ES2020", "DOM"],
     "moduleResolution": "Node",
     "outDir": "dist/js",
-    "typeRoots": ["./src/types", "./node_modules/@types"]
+    "typeRoots": ["./src/types", "./node_modules/@types", "./node_modules/@arcgis/core"]
   },
   "include": ["./src/**/**/*"],
-  "exclude": ["**/node_modules", "**/.*/"]
+  "exclude": ["**/.*/"]
 }
