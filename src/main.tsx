@@ -9,19 +9,19 @@ import './main.css';
 import ErrorPage from './pages/ErrorPage';
 import App from './components/App';
 import { store } from './store/storeConfiguration';
-import { fetchEutrophicationData } from './store/services/app-loading/dataLoadingThunk';
+import { fetchCountryData } from './store/services/app-loading/dataLoadingThunk';
 
 const root = createRoot(document.getElementById('root') as HTMLElement);
 
-store.dispatch(fetchEutrophicationData());
+store.dispatch(fetchCountryData());
 
 try {
   root.render(
-    <StrictMode>
-      <ReduxProvider store={store}>
-        <App></App>
-      </ReduxProvider>
-    </StrictMode>
+    // <StrictMode>
+    <ReduxProvider store={store}>
+      <App></App>
+    </ReduxProvider>
+    // </StrictMode>
   );
 } catch (err) {
   root.render(<ErrorPage />);

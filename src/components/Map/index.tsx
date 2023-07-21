@@ -4,9 +4,10 @@ import MapView from '@arcgis/core/views/MapView';
 import { mapConfig } from '../../config';
 import { setGlobalView } from '../../store/globals/view';
 import { useAppDispatch } from '../../hooks/useAppDispatch';
-import { setLoadingError, setViewLoaded } from '../../store/services/app-loading/loadingSlice';
+import { setViewLoaded } from '../../store/services/app-loading/loadingSlice';
 import PortalItem from '@arcgis/core/portal/PortalItem';
 import WebMap from '@arcgis/core/WebMap';
+import { setError } from '../../store/services/error-messaging/errorSlice';
 
 interface MapProps {
   children?: ReactNode;
@@ -16,7 +17,6 @@ const Map: FC<MapProps> = ({ children }: MapProps) => {
   const [view, setView] = useState<MapView | null>(null);
   const mapDivRef = useRef<HTMLDivElement>(null);
   const dispatch = useAppDispatch();
-
   const initializeMapView = async () => {
     try {
       const portalItem = new PortalItem({
@@ -57,11 +57,11 @@ const Map: FC<MapProps> = ({ children }: MapProps) => {
         setView(mapView);
         setGlobalView(mapView);
         dispatch(setViewLoaded(true));
-        window.view = mapView;
+        //window.view = mapView;
       });
     } catch (error) {
       const { message, details } = error;
-      dispatch(setLoadingError({ error: { name: message, message: details.url } }));
+      dispatch(setError({ name: message, message: details.url }));
     }
   };
 

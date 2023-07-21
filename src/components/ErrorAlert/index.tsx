@@ -3,12 +3,12 @@ import '@esri/calcite-components/dist/components/calcite-alert';
 import { useAppSelector } from '../../hooks/useAppSelector';
 
 export const ErrorAlert = () => {
-  const loadingError = useAppSelector((state) => state.appLoading.error);
-  if (loadingError) {
+  const error = useAppSelector((state) => state.error);
+  if (error.name || error.message) {
     return (
-      <CalciteAlert icon='rangefinder' kind='brand' open label='Loading error' placement='bottom-end'>
-        <div slot='title'>{loadingError.name}</div>
-        <div slot='message'>{loadingError.message}</div>
+      <CalciteAlert icon='rangefinder' kind='danger' open label='Loading error' placement='bottom-end'>
+        <div slot='title'>{error.name}</div>
+        <div slot='message'>{error.message}</div>
       </CalciteAlert>
     );
   } else {

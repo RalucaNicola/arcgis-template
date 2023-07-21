@@ -1,11 +1,10 @@
 import { FC, useEffect, useState } from 'react';
 import MapView from '@arcgis/core/views/MapView';
-import { regionNames } from '../../config';
+import { layerConfig } from '../../config';
 import FeatureLayer from '@arcgis/core/layers/FeatureLayer';
-import { getSimpleRenderer } from '../../utils/utils';
 import { useAppDispatch } from '../../hooks/useAppDispatch';
 import Graphic from '@arcgis/core/Graphic';
-import { highlightCountryFromMap } from '../../store/services/country-selection/countryThunk';
+import { highlightCountryFromMap } from '../../store/services/country-selection/countrySelectionThunk';
 import { createHighlightLayer } from '../../store/services/country-selection/highlightLayer';
 import { Polygon } from '@arcgis/core/geometry';
 
@@ -17,16 +16,15 @@ interface Props {
 }
 
 const CountriesLayer: FC<Props> = ({ view }: Props) => {
-  const [eezLayer, setEezLayer] = useState<FeatureLayer | null>(null);
+  const [countriesLayer, setCountriesLayer] = useState<FeatureLayer | null>(null);
   const dispatch = useAppDispatch();
   useEffect(() => {
     if (view) {
-      const eezLayer = view.map.layers
-        .filter((layer) => layer.title === 'Exclusive Economic Zone boundaries')
+      const countriesLayer = view.map.layers
+        .filter((layer) => layer.title === layerConfig.title)
         .getItemAt(0) as FeatureLayer;
-      eezLayer.outFields = regionNames.map((region) => region.field);
-      eezLayer.renderer = getSimpleRenderer();
-      setEezLayer(eezLayer);
+      countriesLayer.outFields = [layerConfig.field];
+      setCountriesLayer(countriesLayer);
       // create layer used to highlight the selected country
       createHighlightLayer();
     }
@@ -34,13 +32,12 @@ const CountriesLayer: FC<Props> = ({ view }: Props) => {
 
   // add event listener for country selection
   useEffect(() => {
-    if (view && eezLayer) {
-      const listener = view.on('click', async (event) => {
-        const result = await view.hitTest(event, { include: [eezLayer] });
+    if (view && countriesLayer) {
+      const listenerClick = view.on('click', async (event) => {
+        const result = await view.hitTest(event, { include: [countriesLayer] });
         if (result.results && result.results.length > 0) {
           const graphic = (result.results[0] as GraphicHit).graphic;
-          console.log(graphic);
-          const newCountrySelection = graphic.attributes['CountryName'];
+          const newCountrySelection = graphic.attributes[layerConfig.field];
           if (newCountrySelection) {
             dispatch(highlightCountryFromMap({ name: newCountrySelection, geometry: graphic.geometry as Polygon }));
           }
@@ -49,11 +46,20 @@ const CountriesLayer: FC<Props> = ({ view }: Props) => {
         }
       });
 
+      const listenerHover = view.on('pointer-move', async (event) => {
+        const result = await view.hitTest(event, { include: [countriesLayer] });
+        if (result.results && result.results.length > 0) {
+          view.container.style.cursor = 'pointer';
+        } else {
+          view.container.style.cursor = 'default';
+        }
+      });
       return () => {
-        listener.remove();
+        listenerClick.remove();
+        listenerHover.remove();
       };
     }
-  }, [view, eezLayer]);
+  }, [view, countriesLayer]);
 
   return null;
 };

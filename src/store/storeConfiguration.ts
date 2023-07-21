@@ -1,13 +1,15 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
-import countryReducer from './services/country-selection/countrySlice';
+import countryReducer from './services/country-selection/countrySelectionSlice';
 import loadingReducer from './services/app-loading/loadingSlice';
+import errorReducer from './services/error-messaging/errorSlice';
 
 export const getPreloadedState = () => {
   return {};
 };
 
 const rootReducer = combineReducers({
-  appLoading: loadingReducer,
+  error: errorReducer,
+  loading: loadingReducer,
   country: countryReducer
 });
 

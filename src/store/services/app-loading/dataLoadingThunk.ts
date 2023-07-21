@@ -1,31 +1,22 @@
 import { csv } from 'd3';
 import { AppDispatch } from '../../storeConfiguration';
-import { setEutrophicationDataLoaded, setLoadingError } from './loadingSlice';
-import {
-  setEutrophicationCountryData,
-  setEutrophicationDataMonthly,
-  setEutrophicationDataYearly
-} from '../../globals/eutrophicationData';
+import { setCountryDataLoaded } from './loadingSlice';
+import { setCountryData } from '../../globals/countryData';
+import { setError } from '../error-messaging/errorSlice';
 
-export const fetchEutrophicationData = () => async (dispatch: AppDispatch) => {
+export const fetchCountryData = () => async (dispatch: AppDispatch) => {
   try {
-    const countryData = await csv('./data/country_regions.csv');
-    const yearlyData = await csv('./data/impact_data_total.csv');
-    const monthlyData = await csv('./data/impact_data_monthly.csv');
-    if (countryData && yearlyData && monthlyData) {
-      setEutrophicationCountryData(countryData);
-      setEutrophicationDataYearly(yearlyData);
-      setEutrophicationDataMonthly(monthlyData);
-
-      dispatch(setEutrophicationDataLoaded({ eutrophicationDataLoaded: true }));
+    const countryData = await csv('./data/countries.csv');
+    if (countryData) {
+      setCountryData(countryData);
+      dispatch(setCountryDataLoaded(true));
     }
   } catch (error) {
+    console.log(error.message);
     dispatch(
-      setLoadingError({
-        error: {
-          message: error.message,
-          name: 'Loading eutrophication data failed'
-        }
+      setError({
+        message: error.message,
+        name: 'Loading country data failed'
       })
     );
   }

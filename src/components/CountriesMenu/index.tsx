@@ -9,11 +9,12 @@ import { CalciteSelect, CalciteOption } from '@esri/calcite-components-react';
 import { RootState } from '../../store/storeConfiguration';
 import { useSelector } from 'react-redux';
 import { useAppDispatch } from '../../hooks/useAppDispatch';
-import { highlightCountryFromList } from '../../store/services/country-selection/countryThunk';
+import { highlightCountryFromList } from '../../store/services/country-selection/countrySelectionThunk';
 import { DSVRowArray } from 'd3';
 
 const CountriesMenu = ({ data }: { data: DSVRowArray<string> }) => {
   const selectedCountry = useSelector((state: RootState) => state.country);
+  const field = data.columns[0];
   const dispatch = useAppDispatch();
 
   return (
@@ -35,14 +36,14 @@ const CountriesMenu = ({ data }: { data: DSVRowArray<string> }) => {
           >
             {data
               .sort((a, b) => {
-                return a.country.localeCompare(b.country, 'en', { sensitivity: 'base' });
+                return a[field].localeCompare(b[field], 'en', { sensitivity: 'base' });
               })
               .map((feature, index) => (
                 <CalciteOption
                   key={index}
-                  selected={selectedCountry && selectedCountry.name === feature.country ? true : null}
+                  selected={selectedCountry && selectedCountry.name === feature[field] ? true : null}
                 >
-                  {feature.country}
+                  {feature[field]}
                 </CalciteOption>
               ))}
             <CalciteOption selected={selectedCountry && selectedCountry.name ? null : true}>None</CalciteOption>

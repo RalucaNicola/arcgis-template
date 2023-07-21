@@ -67,7 +67,6 @@ export const getCountryFromHashParameters = () => {
     return null;
   }
   return {
-    name: value,
-    selectedFromMap: true
+    name: value
   };
 };

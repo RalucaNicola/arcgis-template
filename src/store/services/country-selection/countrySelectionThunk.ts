@@ -1,8 +1,10 @@
-import { CountryState, setSelectedCountry, setSelectedCountrySuccess, setSelectedCountryError } from './countrySlice';
+import { CountryState, setSelectedCountry, setSelectedCountryFinishedLoading } from './countrySelectionSlice';
 import { getCountriesLayer, getGlobalView } from '../../globals/view';
 import { AppDispatch } from '../../storeConfiguration';
 import { applyFeatureHighlight, removeFeatureHighlight } from './highlightLayer';
 import { Polygon } from '@arcgis/core/geometry';
+import { layerConfig } from '../../../config';
+import { setError } from '../error-messaging/errorSlice';
 
 export const highlightCountryFromMap = (payload: CountryState) => async (dispatch: AppDispatch) => {
   const { name, geometry } = payload;
@@ -10,13 +12,13 @@ export const highlightCountryFromMap = (payload: CountryState) => async (dispatc
   if (name) {
     try {
       applyFeatureHighlight(geometry);
-      dispatch(setSelectedCountrySuccess());
+      dispatch(setSelectedCountryFinishedLoading());
     } catch (error) {
-      dispatch(setSelectedCountryError(error));
+      dispatch(setError({ name: error.name, message: 'Country not found.' }));
     }
   } else {
     removeFeatureHighlight();
-    dispatch(setSelectedCountrySuccess());
+    dispatch(setSelectedCountryFinishedLoading());
   }
 };
 
@@ -29,9 +31,9 @@ export const highlightCountryFromList = (payload: CountryState) => async (dispat
   if (name) {
     try {
       const result = await layer.queryFeatures({
-        where: `CountryName = '${name}'`,
+        where: `${layerConfig.field} = '${name}'`,
         returnGeometry: true,
-        outFields: ['CountryName']
+        outFields: [layerConfig.field]
       });
       if (result.features.length > 0) {
         const [feature] = result.features;
@@ -44,13 +46,16 @@ export const highlightCountryFromList = (payload: CountryState) => async (dispat
           },
           { animate: false }
         );
+      } else {
+        dispatch(setError({ name: 'Country not found.', message: 'No results returned from the query' }));
       }
-      dispatch(setSelectedCountrySuccess());
+      dispatch(setSelectedCountryFinishedLoading());
     } catch (error) {
-      dispatch(setSelectedCountryError(error));
+      dispatch(setSelectedCountryFinishedLoading());
+      dispatch(setError({ name: 'Country not found.', message: error.details.messages[0] }));
     }
   } else {
     removeFeatureHighlight();
-    dispatch(setSelectedCountrySuccess());
+    dispatch(setSelectedCountryFinishedLoading());
   }
 };

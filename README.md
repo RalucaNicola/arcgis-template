@@ -50,7 +50,7 @@ Copy the content of the `/dist` directory to the server where you want to deploy
 
 ## Requirements
 
-- [ArcGIS API for JavaScript (version 4.27)](https://developers.arcgis.com/javascript/index.html)
+- [ArcGIS Maps SDK for JavaScript](https://developers.arcgis.com/javascript/index.html)
 
 ## Issues
 

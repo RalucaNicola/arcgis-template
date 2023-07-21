@@ -1,5 +1,6 @@
 import FeatureLayer from '@arcgis/core/layers/FeatureLayer';
 import MapView from '@arcgis/core/views/MapView';
+import { layerConfig } from '../../config';
 
 let view: MapView = null;
 let countriesLayer: FeatureLayer = null;
@@ -14,9 +15,7 @@ export function getGlobalView() {
 
 export function getCountriesLayer() {
   if (view && !countriesLayer) {
-    countriesLayer = view.map.layers
-      .filter((layer) => layer.title === 'Exclusive Economic Zone boundaries')
-      .getItemAt(0) as FeatureLayer;
+    countriesLayer = view.map.layers.filter((layer) => layer.title === layerConfig.title).getItemAt(0) as FeatureLayer;
   }
   return countriesLayer;
 }

@@ -23,7 +23,7 @@ const shadowSymbol = new SimpleFillSymbol({
 });
 
 const worldLowlightSymbol = new SimpleFillSymbol({
-  color: 'rgba(0, 0, 0, 0.3)',
+  color: 'rgba(0, 0, 0, 0.5)',
   outline: null
 });
 
