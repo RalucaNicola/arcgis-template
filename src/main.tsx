@@ -10,10 +10,12 @@ import ErrorPage from './pages/ErrorPage';
 import App from './components/App';
 import { store } from './store/storeConfiguration';
 import { fetchCountryData } from './store/services/app-loading/dataLoadingThunk';
+import { setupIdentityManager } from './store/services/authentication/authenticationThunk';
 
 const root = createRoot(document.getElementById('root') as HTMLElement);
 
 store.dispatch(fetchCountryData());
+store.dispatch(setupIdentityManager());
 
 try {
   root.render(

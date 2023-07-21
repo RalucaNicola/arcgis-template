@@ -5,3 +5,5 @@ export const layerConfig = {
   title: 'World Countries Generalized',
   field: 'COUNTRY'
 };
+
+export const portalUrl = 'https://geoxc.maps.arcgis.com';

@@ -2,8 +2,10 @@ import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import countryReducer from './services/country-selection/countrySelectionSlice';
 import loadingReducer from './services/app-loading/loadingSlice';
 import errorReducer from './services/error-messaging/errorSlice';
+import authenticationReducer from './services/authentication/authenticationSlice';
 
 const rootReducer = combineReducers({
+  authentication: authenticationReducer,
   error: errorReducer,
   loading: loadingReducer,
   country: countryReducer

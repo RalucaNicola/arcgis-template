@@ -1,6 +1,7 @@
 import BottomPanel from '../BottomPanel';
 import CountriesLayer from '../CountriesLayer';
 import { ErrorAlert } from '../ErrorAlert';
+import { Identity } from '../Identity';
 import Map from '../Map';
 
 const App = () => {
@@ -11,6 +12,7 @@ const App = () => {
       </Map>
       <BottomPanel></BottomPanel>
       <ErrorAlert></ErrorAlert>
+      <Identity></Identity>
     </>
   );
 };
