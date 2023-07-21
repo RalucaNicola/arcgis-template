@@ -8,7 +8,8 @@ export interface CountryState {
 }
 
 const initialState = {
-  name: null
+  name: null,
+  loading: false
 } as CountryState;
 
 const countrySlice = createSlice({

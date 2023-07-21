@@ -12,7 +12,6 @@ export const fetchCountryData = () => async (dispatch: AppDispatch) => {
       dispatch(setCountryDataLoaded(true));
     }
   } catch (error) {
-    console.log(error.message);
     dispatch(
       setError({
         message: error.message,

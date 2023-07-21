@@ -4,9 +4,13 @@ import { layerConfig } from '../../config';
 import FeatureLayer from '@arcgis/core/layers/FeatureLayer';
 import { useAppDispatch } from '../../hooks/useAppDispatch';
 import Graphic from '@arcgis/core/Graphic';
-import { highlightCountryFromMap } from '../../store/services/country-selection/countrySelectionThunk';
+import {
+  highlightCountryAtStart,
+  highlightCountryFromMap
+} from '../../store/services/country-selection/countrySelectionThunk';
 import { createHighlightLayer } from '../../store/services/country-selection/highlightLayer';
 import { Polygon } from '@arcgis/core/geometry';
+import { getCountryFromHashParameters } from '../../utils/URLHashParams';
 
 interface GraphicHit {
   graphic: Graphic;
@@ -27,6 +31,10 @@ const CountriesLayer: FC<Props> = ({ view }: Props) => {
       setCountriesLayer(countriesLayer);
       // create layer used to highlight the selected country
       createHighlightLayer();
+      const countryName = getCountryFromHashParameters();
+      if (countryName) {
+        dispatch(highlightCountryAtStart({ name: countryName }));
+      }
     }
   }, [view]);
 
@@ -46,17 +54,8 @@ const CountriesLayer: FC<Props> = ({ view }: Props) => {
         }
       });
 
-      const listenerHover = view.on('pointer-move', async (event) => {
-        const result = await view.hitTest(event, { include: [countriesLayer] });
-        if (result.results && result.results.length > 0) {
-          view.container.style.cursor = 'pointer';
-        } else {
-          view.container.style.cursor = 'default';
-        }
-      });
       return () => {
         listenerClick.remove();
-        listenerHover.remove();
       };
     }
   }, [view, countriesLayer]);

@@ -11,11 +11,17 @@ import { useSelector } from 'react-redux';
 import { useAppDispatch } from '../../hooks/useAppDispatch';
 import { highlightCountryFromList } from '../../store/services/country-selection/countrySelectionThunk';
 import { DSVRowArray } from 'd3';
+import { useEffect } from 'react';
 
 const CountriesMenu = ({ data }: { data: DSVRowArray<string> }) => {
   const selectedCountry = useSelector((state: RootState) => state.country);
+  const countryLoading = useSelector((state: RootState) => state.country.loading);
   const field = data.columns[0];
   const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    document.body.style.cursor = countryLoading ? 'wait' : 'default';
+  }, [countryLoading]);
 
   return (
     <div className={styles.container}>
