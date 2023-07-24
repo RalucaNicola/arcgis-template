@@ -9,6 +9,7 @@ import { RootState } from '../../store/storeConfiguration';
 import CountriesMenu from '../CountriesMenu';
 import { useAppSelector } from '../../hooks/useAppSelector';
 import { getCountryData } from '../../store/globals/countryData';
+import { motion } from 'framer-motion';
 
 const BottomPanel = () => {
   const [visible, setVisible] = useState(true);
@@ -49,9 +50,9 @@ const BottomPanel = () => {
     <div className={styles.container}>
       {getHeader()}
       {countryData ? (
-        <div style={{ display: visible ? 'revert' : 'none' }}>
+        <motion.div layout='size' animate={{ height: visible ? 'auto' : 0 }} style={{ overflow: 'hidden' }}>
           <CountriesMenu data={countryData}></CountriesMenu>
-        </div>
+        </motion.div>
       ) : null}
     </div>
   );
