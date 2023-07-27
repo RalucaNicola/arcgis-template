@@ -9,7 +9,7 @@ const MotionAvatar = motion(CalciteAvatar);
 import { useAppSelector } from '../../hooks/useAppSelector';
 import { useAppDispatch } from '../../hooks/useAppDispatch';
 import { signIn, signOut } from '../../store/services/authentication/authenticationThunk';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 export const Identity = () => {
   const [open, setOpen] = useState(false);
@@ -19,6 +19,7 @@ export const Identity = () => {
   const toggleIdentityMenu = () => {
     setOpen(!open);
   };
+
   return (
     <div className={styles.identity}>
       {!signedIn ? (
@@ -36,7 +37,7 @@ export const Identity = () => {
           onClick={toggleIdentityMenu}
         ></MotionAvatar>
       )}
-      {open && (
+      {open && signedIn && (
         <motion.div className={styles.identityMenu}>
           <div className={styles.userInfo}>
             <CalciteAvatar fullName={fullName} username={userName} thumbnail={thumbnailUrl} scale='l'></CalciteAvatar>
