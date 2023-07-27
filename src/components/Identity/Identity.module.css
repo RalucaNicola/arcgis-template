@@ -1,5 +1,35 @@
 .identity {
   position: absolute;
-  top: 0;
-  right: 0;
+  top: var(--margin);
+  right: var(--margin);
+}
+
+.avatar {
+  cursor: pointer;
+  float: right;
+}
+
+.identityMenu {
+  clear: both;
+  margin-top: 40px;
+  background: var(--background-color);
+  border-radius: var(--border-radius);
+  box-shadow: var(--box-shadow);
+  padding: 15px;
+  border: 1px solid rgba(255 255 255 / 20%);
+}
+
+.userTitle {
+  font-weight: bold;
+}
+
+.userInfo {
+  display: flex;
+  align-items: center;
+  gap: var(--margin);
+  margin-bottom: var(--margin);
+}
+
+.userInfo p {
+  margin: 0;
 }

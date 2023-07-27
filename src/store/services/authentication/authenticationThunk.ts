@@ -27,7 +27,7 @@ export const setupIdentityManager = () => async (dispatch: AppDispatch) => {
         thumbnailUrl: portal.user?.thumbnailUrl
       })
     );
-    console.log('Signed in');
+    console.log(portal);
   } catch (error) {
     console.log(error);
   }
