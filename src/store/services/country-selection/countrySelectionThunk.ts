@@ -1,5 +1,5 @@
 import { CountryState, setSelectedCountry, setSelectedCountryFinishedLoading } from './countrySelectionSlice';
-import { getCountriesLayer, getGlobalView } from '../../globals/view';
+import { getCountriesLayer, getGlobalView } from '../../globals';
 import { AppDispatch } from '../../storeConfiguration';
 import { applyFeatureHighlight, removeFeatureHighlight } from './highlightLayer';
 import { Polygon } from '@arcgis/core/geometry';

@@ -9,7 +9,7 @@ const MotionAvatar = motion(CalciteAvatar);
 import { useAppSelector } from '../../hooks/useAppSelector';
 import { useAppDispatch } from '../../hooks/useAppDispatch';
 import { signIn, signOut } from '../../store/services/authentication/authenticationThunk';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 export const Identity = () => {
   const [open, setOpen] = useState(false);

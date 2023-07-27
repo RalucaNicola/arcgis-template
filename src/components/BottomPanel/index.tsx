@@ -8,7 +8,7 @@ import { useSelector } from 'react-redux';
 import { RootState } from '../../store/storeConfiguration';
 import CountriesMenu from '../CountriesMenu';
 import { useAppSelector } from '../../hooks/useAppSelector';
-import { getCountryData } from '../../store/globals/countryData';
+import { getCountryData } from '../../store/globals';
 import { motion } from 'framer-motion';
 
 const BottomPanel = () => {

@@ -2,7 +2,7 @@ import * as styles from './Map.module.css';
 import { Children, FC, ReactElement, ReactNode, cloneElement, useEffect, useRef, useState } from 'react';
 import MapView from '@arcgis/core/views/MapView';
 import { mapConfig } from '../../config';
-import { setGlobalView } from '../../store/globals/view';
+import { setGlobalView } from '../../store/globals';
 import { useAppDispatch } from '../../hooks/useAppDispatch';
 import { setViewLoaded } from '../../store/services/app-loading/loadingSlice';
 import PortalItem from '@arcgis/core/portal/PortalItem';

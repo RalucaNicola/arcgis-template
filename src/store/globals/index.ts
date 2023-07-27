@@ -1,9 +1,11 @@
 import FeatureLayer from '@arcgis/core/layers/FeatureLayer';
 import MapView from '@arcgis/core/views/MapView';
+import { DSVRowArray } from 'd3';
 import { layerConfig } from '../../config';
 
 let view: MapView = null;
 let countriesLayer: FeatureLayer = null;
+let countryData: DSVRowArray<string> | null = null;
 
 export function setGlobalView(mapView: MapView) {
   view = mapView;
@@ -22,4 +24,12 @@ export function getCountriesLayer() {
 
 export function getLayerById(id: string) {
   return view.map.findLayerById(id);
+}
+
+export function setCountryData(data: DSVRowArray<string>) {
+  countryData = data;
+}
+
+export function getCountryData() {
+  return countryData;
 }

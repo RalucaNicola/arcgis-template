@@ -23,41 +23,13 @@ body,
   --calcite-font-size--1: 0.85rem;
   --calcite-ui-text-1: rgb(230, 230, 230);
   --calcite-ui-text-2: rgb(210, 210, 210);
-  --calcite-ui-text-3: rgb(210, 210, 210);
   --calcite-label-margin-bottom: 0;
 }
 
-@supports ((-webkit-backdrop-filter: none) or (backdrop-filter: none)) {
-  .esri-widget {
-    background: var(--background-color);
-    -webkit-backdrop-filter: blur(8px);
-    backdrop-filter: blur(8px);
-  }
-}
-
-a {
-  color: white;
-}
-
-.esri-popup {
-  --calcite-ui-background: transparent !important;
-  --calcite-ui-foreground-1: transparent !important;
-  --calcite-ui-text-2: rgb(230, 230, 230);
-}
-
-.esri-popup__content {
-  line-height: 1.4rem;
-}
-
-sup {
-  line-height: 0;
-  vertical-align: super;
-}
-
-/* this was John Nelson's idea */
-.esri-view .esri-view-surface--inset-outline:focus::after {
+/* remove outline from map */
+/* .esri-view .esri-view-surface--inset-outline:focus::after {
   outline: none !important;
-}
+} */
 
 /* scrollbar styles */
 

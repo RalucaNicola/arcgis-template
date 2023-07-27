@@ -10,9 +10,9 @@
 }
 
 .identityMenu {
+  composes: background from '../../utils/utils.module.css';
   clear: both;
   margin-top: 40px;
-  background: var(--background-color);
   border-radius: var(--border-radius);
   box-shadow: var(--box-shadow);
   padding: 15px;
