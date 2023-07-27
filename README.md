@@ -2,16 +2,16 @@
 
 Application template using ArcGIS Maps SDK for JavaScript, React and Calcite.
 
-- [ ] Authentication
+- [x] Authentication
 - [x] Calcite components for UI
 - [x] Redux for state management
 - [x] Thunk middleware for async operations
 - [x] Responsive design (mobile and desktop)
 - [x] Reading/setting state from/in URL params
 - [x] Error display using Calcite alerts (only displaying the last error)
-- [ ] Dismissable intro screen
+- [x] Dismissable intro screen
 - [ ] Localization support?
-- [ ] Tests
+- [ ] Tests?
 
 ## Instructions:
 

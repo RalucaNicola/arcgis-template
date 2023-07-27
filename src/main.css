@@ -23,7 +23,17 @@ body,
   --calcite-font-size--1: 0.85rem;
   --calcite-ui-text-1: rgb(230, 230, 230);
   --calcite-ui-text-2: rgb(210, 210, 210);
+  --calcite-ui-text-3: rgb(150, 150, 150);
   --calcite-label-margin-bottom: 0;
+}
+
+a {
+  color: var(--calcite-ui-text-3);
+  text-decoration: none;
+}
+
+a:hover {
+  color: var(--calcite-ui-text-1);
 }
 
 /* remove outline from map */

@@ -10,12 +10,15 @@ import CountriesMenu from '../CountriesMenu';
 import { useAppSelector } from '../../hooks/useAppSelector';
 import { getCountryData } from '../../store/globals';
 import { motion } from 'framer-motion';
+import { useAppDispatch } from '../../hooks/useAppDispatch';
+import { setInfoModalOptions } from '../../store/services/modal-options/modalSlice';
 
 const BottomPanel = () => {
   const [visible, setVisible] = useState(true);
   const selectedCountry = useSelector((state: RootState) => state.country);
   const eutrophicationDataLoaded = useAppSelector((state) => state.loading.countryDataLoaded);
   const countryData = eutrophicationDataLoaded ? getCountryData() : null;
+  const dispatch = useAppDispatch();
 
   const togglePanel = () => {
     setVisible(!visible);
@@ -35,13 +38,22 @@ const BottomPanel = () => {
             <div>Select a country in the menu or on the map.</div>
           )}
         </div>
-        <CalciteAction
-          icon={visible ? 'chevronDown' : 'chevronUp'}
-          scale='s'
-          appearance='transparent'
-          onClick={togglePanel}
-          text=''
-        ></CalciteAction>
+        <div className={styles.rightActionsContainer}>
+          <CalciteAction
+            icon='information-f'
+            scale='s'
+            appearance='transparent'
+            text=''
+            onClick={() => dispatch(setInfoModalOptions({ visible: true }))}
+          ></CalciteAction>
+          <CalciteAction
+            icon={visible ? 'chevronDown' : 'chevronUp'}
+            scale='s'
+            appearance='transparent'
+            onClick={togglePanel}
+            text=''
+          ></CalciteAction>
+        </div>
       </div>
     );
   };

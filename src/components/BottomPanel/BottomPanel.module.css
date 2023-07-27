@@ -23,6 +23,12 @@
   align-items: center;
 }
 
+.rightActionsContainer {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
 .selectedCountry {
   color: var(--calcite-ui-brand);
   font-weight: bold;
