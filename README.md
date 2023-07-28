@@ -10,6 +10,7 @@ Application template using ArcGIS Maps SDK for JavaScript, React and Calcite.
 - [x] Reading/setting state from/in URL params
 - [x] Error display using Calcite alerts (only displaying the last error)
 - [x] Dismissable intro screen
+- [x] UI animations (using Framer Motion)
 - [ ] Localization support?
 - [ ] Tests?
 
