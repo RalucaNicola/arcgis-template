@@ -47,16 +47,20 @@ export const initializeMapView = (divRef: HTMLDivElement) => async (dispatch: Ap
             }
         });
 
+        mapView.id = crypto.getRandomValues(new Uint32Array(1))[0].toString();
+
         await mapView.when(() => {
+            console.log(`View with id ${mapView.id} is loaded`);
             setGlobalView(mapView);
             dispatch(setViewLoaded(true));
             const mapCenter = getMapCenterFromHashParams();
             if (mapCenter) {
                 mapView.goTo({ zoom: mapCenter.zoom, center: [mapCenter.center.lon, mapCenter.center.lat] });
             }
-            dispatch(initializeCountryLayer());
-            //window.view = mapView;
+            dispatch(initializeCountryLayer(mapView));
+            window[`view-${mapView.id}`] = mapView;
             dispatch(initializeViewEventListeners());
+
         });
     } catch (error) {
         const { message } = error;

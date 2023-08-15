@@ -1,5 +1,5 @@
 import * as styles from './Map.module.css';
-import { FC, ReactNode, useEffect, useRef } from 'react';
+import { FC, ReactNode, useEffect, useRef, useState } from 'react';
 import { useAppDispatch } from '../../hooks/useAppDispatch';
 import { initializeMapView } from '../../store/services/map/viewInit';
 import { removeEventListeners } from '../../store/services/map/eventListeners';
@@ -16,8 +16,11 @@ const Map: FC<Props> = () => {
   // initialize view
   useEffect(() => {
     if (mapDivRef.current) {
+      mapDivRef.current.id = crypto.getRandomValues(new Uint32Array(1))[0].toString();
+      console.log('Container with id', mapDivRef.current.id, 'is ready');
       dispatch(initializeMapView(mapDivRef.current));
       return () => {
+        console.log('Running effect cleanup on container id ', mapDivRef.current.id);
         removeEventListeners();
       }
     }

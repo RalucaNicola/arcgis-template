@@ -9,11 +9,13 @@ let countryData: DSVRowArray<string> | null = null;
 
 export function setGlobalView(mapView: MapView) {
   view = mapView;
+  console.log(`Setting global variable view with id ${view.id} on container with id ${view.container.id}`);
 }
 
 export function getGlobalView() {
   return view;
 }
+window.getGlobalView = getGlobalView;
 
 export function getCountriesLayer() {
   if (view && !countriesLayer) {
@@ -21,6 +23,8 @@ export function getCountriesLayer() {
   }
   return countriesLayer;
 }
+
+window.getCountriesLayer = getCountriesLayer;
 
 export function getLayerById(id: string) {
   return view.map.findLayerById(id);

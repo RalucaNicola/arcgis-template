@@ -13,8 +13,10 @@ interface GraphicHit {
 
 const listeners: IHandle[] = [];
 export const initializeViewEventListeners = () => (dispatch: AppDispatch) => {
+
     const view = getGlobalView();
     if (view) {
+        console.log("Events are getting added on view with id", view.id);
         const listener = reactiveUtils.when(
             () => view.stationary,
             () => {
@@ -22,12 +24,14 @@ export const initializeViewEventListeners = () => (dispatch: AppDispatch) => {
                 const lat = +view.center.latitude.toFixed(3);
                 const zoom = view.zoom;
                 setMapCenterToHashParams({ lon, lat }, zoom);
+                console.log("You panned on the map with view id ", view.id);
             }
         );
 
         listeners.push(listener);
         const countriesLayer = getCountriesLayer();
         const listenerClick = view.on('click', async (event) => {
+            console.log("You clicked on a country in the view with id ", view.id);
             const result = await view.hitTest(event, { include: [countriesLayer] });
             if (result.results && result.results.length > 0) {
                 const graphic = (result.results[0] as GraphicHit).graphic;
@@ -45,6 +49,7 @@ export const initializeViewEventListeners = () => (dispatch: AppDispatch) => {
 }
 
 export const removeEventListeners = () => {
+    console.log("events are removed");
     listeners.forEach(listener => listener.remove());
 }
 
