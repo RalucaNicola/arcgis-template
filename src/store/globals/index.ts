@@ -16,7 +16,7 @@ export function getGlobalView() {
 }
 
 export function getCountriesLayer() {
-  if (view && !countriesLayer) {
+  if (view) {
     countriesLayer = view.map.layers.filter((layer) => layer.title === layerConfig.title).getItemAt(0) as FeatureLayer;
   }
   return countriesLayer;
