@@ -1,8 +1,8 @@
-import { AppDispatch } from "../../storeConfiguration";
-import { layerConfig } from "../../../config";
-import { createHighlightLayer } from "../country-selection/highlightLayer";
-import { getCountryFromHashParameters } from "../../../utils/URLHashParams";
-import { highlightCountryAtStart } from "../country-selection/countrySelectionThunk";
+import { AppDispatch } from "../../store/storeConfiguration";
+import { layerConfig } from "../../config";
+import { createHighlightLayer } from "./highlightLayer";
+import { getCountryFromHashParameters } from "../../utils/URLHashParams";
+import { highlightCountryAtStart } from "../countrySelection";
 import { getView } from "./view";
 import { DSVRowArray } from 'd3';
 

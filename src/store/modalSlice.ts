@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { getLocalStorageItem, isItemInLocalStorage } from '../../../utils/LocalStorage';
-import { displayInfoModalDefault } from '../../../config';
+import { getLocalStorageItem, isItemInLocalStorage } from '../utils/LocalStorage';
+import { displayInfoModalDefault } from '../config';
 
 export interface InfoModalOptions {
   visible?: boolean;

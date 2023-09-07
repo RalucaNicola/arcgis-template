@@ -1,9 +1,9 @@
 import * as reactiveUtils from "@arcgis/core/core/reactiveUtils";
-import { setMapCenterToHashParams } from "../../../utils/URLHashParams";
+import { setMapCenterToHashParams } from "../../utils/URLHashParams";
 import Graphic from "@arcgis/core/Graphic";
-import { layerConfig } from "../../../config";
-import { AppDispatch } from "../../storeConfiguration";
-import { highlightCountryFromMap } from "../country-selection/countrySelectionThunk";
+import { layerConfig } from "../../config";
+import { AppDispatch } from "../../store/storeConfiguration";
+import { highlightCountryFromMap } from "../countrySelection";
 import { type Polygon } from "@arcgis/core/geometry";
 import { getView } from "./view";
 import { getCountriesLayer } from "./countryLayer";

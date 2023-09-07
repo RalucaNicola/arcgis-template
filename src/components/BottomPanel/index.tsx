@@ -10,8 +10,8 @@ import CountriesMenu from '../CountriesMenu';
 import { useAppSelector } from '../../hooks/useAppSelector';
 import { motion } from 'framer-motion';
 import { useAppDispatch } from '../../hooks/useAppDispatch';
-import { setInfoModalOptions } from '../../store/services/modal-options/modalSlice';
-import { getCountryData } from '../../store/services/map/countryLayer';
+import { setInfoModalOptions } from '../../store/modalSlice';
+import { getCountryData } from '../../services/map/countryLayer';
 
 const BottomPanel = () => {
   const [visible, setVisible] = useState(true);

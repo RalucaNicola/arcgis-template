@@ -1,10 +1,10 @@
 import PortalItem from '@arcgis/core/portal/PortalItem';
 import WebMap from '@arcgis/core/WebMap';
-import { mapConfig } from '../../../config';
-import { AppDispatch } from '../../storeConfiguration';
-import { setViewLoaded } from '../app-loading/loadingSlice';
-import { getMapCenterFromHashParams } from '../../../utils/URLHashParams';
-import { setError } from '../error-messaging/errorSlice';
+import { mapConfig } from '../../config';
+import { AppDispatch } from '../../store/storeConfiguration';
+import { setViewLoaded } from '../../store/loadingSlice';
+import { getMapCenterFromHashParams } from '../../utils/URLHashParams';
+import { setError } from '../../store/errorSlice';
 import { initializeCountryLayer } from './countryLayer';
 import { initializeViewEventListeners } from './eventListeners';
 import MapView from '@arcgis/core/views/MapView';

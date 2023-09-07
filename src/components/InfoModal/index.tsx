@@ -7,7 +7,7 @@ import { applicationTitle } from '../../config';
 import { useAppDispatch } from '../../hooks/useAppDispatch';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../store/storeConfiguration';
-import { setInfoModalOptions } from '../../store/services/modal-options/modalSlice';
+import { setInfoModalOptions } from '../../store/modalSlice';
 import { getLocalStorageItem, setLocalStorageItem } from '../../utils/LocalStorage';
 
 const InfoModal = () => {

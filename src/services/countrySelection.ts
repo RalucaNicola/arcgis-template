@@ -1,12 +1,12 @@
-import { CountryState, setSelectedCountry, setSelectedCountryFinishedLoading } from './countrySelectionSlice';
-import { AppDispatch } from '../../storeConfiguration';
-import { applyFeatureHighlight, removeFeatureHighlight } from './highlightLayer';
+import { CountryState, setSelectedCountry, setSelectedCountryFinishedLoading } from '../store/countrySelectionSlice';
+import { AppDispatch } from '../store/storeConfiguration';
+import { applyFeatureHighlight, removeFeatureHighlight } from './map/highlightLayer';
 import { Polygon } from '@arcgis/core/geometry';
-import { layerConfig } from '../../../config';
-import { setError } from '../error-messaging/errorSlice';
-import { setCountryToHashParameters } from '../../../utils/URLHashParams';
-import { getView } from '../map/view';
-import { getCountriesLayer } from '../map/countryLayer';
+import { layerConfig } from '../config';
+import { setError } from '../store/errorSlice';
+import { setCountryToHashParameters } from '../utils/URLHashParams';
+import { getView } from './map/view';
+import { getCountriesLayer } from './map/countryLayer';
 
 export const highlightCountryFromMap = (payload: CountryState) => async (dispatch: AppDispatch) => {
   const { name, geometry } = payload;

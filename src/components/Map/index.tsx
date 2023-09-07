@@ -1,8 +1,8 @@
 import * as styles from './Map.module.css';
 import { FC, ReactNode, useEffect, useRef } from 'react';
 import { useAppDispatch } from '../../hooks/useAppDispatch';
-import { initializeView, destroyView } from '../../store/services/map/view';
-import { removeEventListeners } from '../../store/services/map/eventListeners';
+import { initializeView, destroyView } from '../../services/map/view';
+import { removeEventListeners } from '../../services/map/eventListeners';
 
 interface Props {
   children?: ReactNode;

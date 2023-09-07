@@ -1,9 +1,9 @@
-import { AppDispatch } from '../../storeConfiguration';
+import { AppDispatch } from '../store/storeConfiguration';
 import IdentityManager from '@arcgis/core/identity/IdentityManager';
 import OAuthInfo from '@arcgis/core/identity/OAuthInfo';
 import Portal from '@arcgis/core/portal/Portal';
-import { portalUrl } from '../../../config';
-import { setAuthenticationInfo } from './authenticationSlice';
+import { portalUrl } from '../config';
+import { setAuthenticationInfo } from '../store/authenticationSlice';
 
 export const setupIdentityManager = () => async (dispatch: AppDispatch) => {
   const portal = new Portal({ url: portalUrl });

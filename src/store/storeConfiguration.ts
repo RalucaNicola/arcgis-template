@@ -1,9 +1,9 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
-import countryReducer from './services/country-selection/countrySelectionSlice';
-import loadingReducer from './services/app-loading/loadingSlice';
-import errorReducer from './services/error-messaging/errorSlice';
-import authenticationReducer from './services/authentication/authenticationSlice';
-import modalOptionsReducer from './services/modal-options/modalSlice';
+import countryReducer from './countrySelectionSlice';
+import loadingReducer from './loadingSlice';
+import errorReducer from './errorSlice';
+import authenticationReducer from './authenticationSlice';
+import modalOptionsReducer from './modalSlice';
 
 const rootReducer = combineReducers({
   authentication: authenticationReducer,

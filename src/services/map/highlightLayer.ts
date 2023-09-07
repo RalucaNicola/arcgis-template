@@ -3,7 +3,7 @@ import { Extent, Polygon } from '@arcgis/core/geometry';
 import GraphicsLayer from '@arcgis/core/layers/GraphicsLayer';
 import GroupLayer from '@arcgis/core/layers/GroupLayer';
 import { SimpleFillSymbol } from '@arcgis/core/symbols';
-import { getView } from '../map/view';
+import { getView } from './view';
 
 let bottomLayer: GraphicsLayer = null;
 let shadowLayer: GraphicsLayer = null;

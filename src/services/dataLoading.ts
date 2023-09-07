@@ -1,8 +1,8 @@
 import { csv } from 'd3';
-import { AppDispatch } from '../../storeConfiguration';
-import { setCountryDataLoaded } from './loadingSlice';
-import { setError } from '../error-messaging/errorSlice';
-import { setCountryData } from '../map/countryLayer';
+import { AppDispatch } from '../store/storeConfiguration';
+import { setCountryDataLoaded } from '../store/loadingSlice';
+import { setError } from '../store/errorSlice';
+import { setCountryData } from './map/countryLayer';
 
 export const fetchCountryData = () => async (dispatch: AppDispatch) => {
   try {

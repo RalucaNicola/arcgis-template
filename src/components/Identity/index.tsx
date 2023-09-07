@@ -8,7 +8,7 @@ const MotionAvatar = motion(CalciteAvatar);
 
 import { useAppSelector } from '../../hooks/useAppSelector';
 import { useAppDispatch } from '../../hooks/useAppDispatch';
-import { signIn, signOut } from '../../store/services/authentication/authenticationThunk';
+import { signIn, signOut } from '../../services/authentication';
 import { useState } from 'react';
 
 export const Identity = () => {
