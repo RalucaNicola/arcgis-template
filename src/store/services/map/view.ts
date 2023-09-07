@@ -1,17 +1,28 @@
 import PortalItem from '@arcgis/core/portal/PortalItem';
 import WebMap from '@arcgis/core/WebMap';
 import { mapConfig } from '../../../config';
-import MapView from '@arcgis/core/views/MapView';
-import { setGlobalView } from '../../globals';
 import { AppDispatch } from '../../storeConfiguration';
 import { setViewLoaded } from '../app-loading/loadingSlice';
 import { getMapCenterFromHashParams } from '../../../utils/URLHashParams';
 import { setError } from '../error-messaging/errorSlice';
-import { initializeCountryLayer } from './countryLayerInit';
+import { initializeCountryLayer } from './countryLayer';
 import { initializeViewEventListeners } from './eventListeners';
+import MapView from '@arcgis/core/views/MapView';
 
+let view: __esri.MapView = null;
 
-export const initializeMapView = (divRef: HTMLDivElement) => async (dispatch: AppDispatch) => {
+export function getView() {
+    return view;
+}
+
+export function destroyView() {
+    if (view) {
+        view.destroy();
+        view = null;
+    }
+}
+
+export const initializeView = (divRef: HTMLDivElement) => async (dispatch: AppDispatch) => {
     try {
         const portalItem = new PortalItem({
             id: mapConfig['web-map-id']
@@ -22,7 +33,7 @@ export const initializeMapView = (divRef: HTMLDivElement) => async (dispatch: Ap
             portalItem: portalItem
         });
         await webmap.load();
-        const mapView = new MapView({
+        view = new MapView({
             container: divRef,
             map: webmap,
             padding: {
@@ -47,15 +58,14 @@ export const initializeMapView = (divRef: HTMLDivElement) => async (dispatch: Ap
             }
         });
 
-        await mapView.when(() => {
-            setGlobalView(mapView);
+        await view.when(() => {
             dispatch(setViewLoaded(true));
             const mapCenter = getMapCenterFromHashParams();
             if (mapCenter) {
-                mapView.goTo({ zoom: mapCenter.zoom, center: [mapCenter.center.lon, mapCenter.center.lat] });
+                view.goTo({ zoom: mapCenter.zoom, center: [mapCenter.center.lon, mapCenter.center.lat] });
             }
             dispatch(initializeCountryLayer());
-            //window.view = mapView;
+            //window.view = view;
             dispatch(initializeViewEventListeners());
         });
     } catch (error) {

@@ -1,11 +1,12 @@
 import * as reactiveUtils from "@arcgis/core/core/reactiveUtils";
-import { getCountriesLayer, getGlobalView } from "../../globals";
 import { setMapCenterToHashParams } from "../../../utils/URLHashParams";
 import Graphic from "@arcgis/core/Graphic";
 import { layerConfig } from "../../../config";
 import { AppDispatch } from "../../storeConfiguration";
 import { highlightCountryFromMap } from "../country-selection/countrySelectionThunk";
 import { type Polygon } from "@arcgis/core/geometry";
+import { getView } from "./view";
+import { getCountriesLayer } from "./countryLayer";
 
 interface GraphicHit {
     graphic: Graphic;
@@ -13,7 +14,7 @@ interface GraphicHit {
 
 const listeners: IHandle[] = [];
 export const initializeViewEventListeners = () => (dispatch: AppDispatch) => {
-    const view = getGlobalView();
+    const view = getView();
     if (view) {
         const listener = reactiveUtils.when(
             () => view.stationary,

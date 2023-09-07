@@ -3,7 +3,7 @@ import { Extent, Polygon } from '@arcgis/core/geometry';
 import GraphicsLayer from '@arcgis/core/layers/GraphicsLayer';
 import GroupLayer from '@arcgis/core/layers/GroupLayer';
 import { SimpleFillSymbol } from '@arcgis/core/symbols';
-import { getGlobalView } from '../../globals';
+import { getView } from '../map/view';
 
 let bottomLayer: GraphicsLayer = null;
 let shadowLayer: GraphicsLayer = null;
@@ -28,7 +28,7 @@ const worldLowlightSymbol = new SimpleFillSymbol({
 });
 
 export const createHighlightLayer = () => {
-  const view = getGlobalView();
+  const view = getView();
   const world = new Graphic({
     geometry: new Extent({
       xmin: -180,

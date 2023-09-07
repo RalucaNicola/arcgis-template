@@ -8,10 +8,10 @@ import { useSelector } from 'react-redux';
 import { RootState } from '../../store/storeConfiguration';
 import CountriesMenu from '../CountriesMenu';
 import { useAppSelector } from '../../hooks/useAppSelector';
-import { getCountryData } from '../../store/globals';
 import { motion } from 'framer-motion';
 import { useAppDispatch } from '../../hooks/useAppDispatch';
 import { setInfoModalOptions } from '../../store/services/modal-options/modalSlice';
+import { getCountryData } from '../../store/services/map/countryLayer';
 
 const BottomPanel = () => {
   const [visible, setVisible] = useState(true);
